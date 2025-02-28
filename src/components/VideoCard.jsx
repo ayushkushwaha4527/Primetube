@@ -1,59 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  GOOGLE_API_KEY,
-  YOUTUBE_GET_VIDEO_BY_ID,
-  kFormatter,
-  numFormatter,
-} from "../utils/constants";
-import moment from "moment/moment";
+import React from "react";
+import moment from "moment";
+import { numFormatter } from "../utils/constants";
 
 const VideoCard = ({
   thumbnail,
   title,
-
   channelTitle,
   releaseDate,
   viewsCount,
 }) => {
-  // const getVideosById = async (videoId) => {
-  //   const data = await fetch(
-  //     `${YOUTUBE_GET_VIDEO_BY_ID}${videoId}&key=${GOOGLE_API_KEY}`
-  //   );
-  //   const result = await data.json();
-  //   console.log(result);
-  //   return result?.items[0]?.statistics?.viewCount
-  // };
-
-  //thumbnail title,channelTitle,publishedat,viewcount
   return (
-    <div className="flex flex-col gap-1 shadow-lg w-[320px] h-[260px]   rounded-xl  ">
-      <div>
-        <img className="rounded-xl " src={thumbnail} alt="thumbnail" />
+    <div className="flex flex-col gap-1 w-[320px] h-[260px] rounded-lg overflow-hidden shadow-lg">
+      <div className="relative w-full h-[180px]">
+        <img
+          className="w-full h-full object-cover"
+          src={thumbnail}
+          alt="thumbnail"
+        />
       </div>
-      <ul className="flex flex-col  p-2 w-full">
-        <li className="font-semibold text-md   truncate overflow-hidden">
+      <div className="flex flex-col p-2">
+        <h3 className="font-semibold text-md truncate overflow-hidden">
           {title}
-        </li>
-        <li className="text-sm text-gray-500 truncate">{channelTitle}</li>
-        <ul className="flex gap-3 text-xs">
-          <li>{numFormatter(viewsCount)} views</li>
-          <li>{moment(releaseDate).fromNow()}</li>
-        </ul>
-      </ul>
+        </h3>
+        <p className="text-sm text-gray-500 truncate">{channelTitle}</p>
+        <div className="flex gap-3 text-xs text-gray-500">
+          <span>{numFormatter(viewsCount)} views</span>
+          <span>{moment(releaseDate).fromNow()}</span>
+        </div>
+      </div>
     </div>
   );
 };
-
-// Add HOC to add additional components to card
-// export const AddVideoCard = ({ video }) => {
-//   return (
-//     <div className="p-1 border-2 border-red-800">
-//       <a href="https://www.google.com" target="blank">
-//         <VideoCard video={video} />
-//       </a>
-//     </div>
-//   );
-// };
 
 export default VideoCard;

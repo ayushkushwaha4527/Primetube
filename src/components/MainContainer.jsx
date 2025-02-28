@@ -6,16 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 
 const MainContainer = () => {
   const dispatch = useDispatch();
-  const searchVideos = useSelector(
-    (store) => store.search.searchSuggestionData
-  );
+  const searchVideos = useSelector((store) => store.search.searchSuggestionData);
+
   return (
     <div
-      className="flex-1 flex flex-col items-center gap-4 w-full"
+      className="flex-1 flex flex-col items-center gap-6 w-full px-4 md:px-8"
       onFocus={() => dispatch(classMenu())}
     >
+      {/* Display button list only if there are no search results */}
       {!searchVideos && <ButtonList />}
-      <VideoContainer />
+
+      {/* Video content */}
+      <div className="w-full max-w-screen-xl">
+        <VideoContainer />
+      </div>
     </div>
   );
 };

@@ -1,49 +1,51 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import store from "../utils/store";
 import { Link } from "react-router-dom";
 import { GiCancel } from "react-icons/gi";
-
-import { YOUTUBE_ICON_URL, sidebarData } from "../utils/constants";
-import { classMenu, toggleMenu } from "../utils/appSlice";
 import { SiYoutube } from "react-icons/si";
+
+import { sidebarData } from "../utils/constants";
+import { toggleMenu } from "../utils/appSlice";
 
 const Sidebar = () => {
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
   const dispatch = useDispatch();
+
+  if (!isMenuOpen) return null;
+
   return (
-    isMenuOpen && (
-      <div className="p-4 flex flex-col gap-2 shadow-lg h-screen  absolute    w-[250px]  min-w-[200px] max-w-[400px]  z-40 bg-white cursor-pointer border top-0 left-0  ">
-        <button
-          className="absolute right-3 text-red-800 text-2xl"
-          onClick={() => dispatch(toggleMenu())}
-        >
-          <GiCancel />
-        </button>
-        <div className="flex flex-col gap-2">
-          <a href="/">
-            <div className=" flex gap-1  items-center  ">
-              <SiYoutube className="text-4xl text-red-600" />
-              <span className="text-lg font-bold">MyYoutube</span>
-            </div>
-          </a>
-          <div>
-            <ul className="py-1 flex flex-col gap-2 font-bold text-lg ">
-              {sidebarData.map((data, i) => {
-                return (
-                  <Link to={data?.to} key={i}>
-                    <li className=" hover:bg-gray-200 hover:p-[3px] hover:rounded-lg p-[3px] flex gap-2 items-center   ">
-                      <span className=" text-2xl ">{data.icon}</span>{" "}
-                      {data.name}
-                    </li>
-                  </Link>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
+    <div className="fixed top-0 left-0 w-[260px] min-w-[250px] max-w-[350px] h-screen bg-white shadow-lg border-r border-gray-200 z-50 p-4 transition-transform duration-300 ease-in-out">
+      {/* Close Button */}
+      <button
+        className="absolute top-4 right-4 text-red-700 text-2xl hover:text-red-500 transition"
+        onClick={() => dispatch(toggleMenu())}
+      >
+        <GiCancel />
+      </button>
+
+      {/* Logo Section */}
+      <div className="flex items-center gap-2 mb-6">
+        <SiYoutube className="text-4xl text-red-600" />
+        <span className="text-xl font-bold text-gray-900">PrimeTube</span>
       </div>
-    )
+
+      {/* Sidebar Links */}
+      <ul className="space-y-3 font-semibold text-gray-800">
+        {sidebarData.map((data, index) => (
+          <li key={index} className="group">
+            <Link
+              to={data?.to}
+              className="flex items-center gap-3 p-2 rounded-lg transition duration-200 hover:bg-gray-200"
+            >
+              <span className="text-2xl text-gray-700 group-hover:text-red-600">
+                {data.icon}
+              </span>
+              <span className="group-hover:text-gray-900">{data.name}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

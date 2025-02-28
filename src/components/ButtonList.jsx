@@ -49,4 +49,8 @@ export const buttonList = [
   { name: "Gadgets" },
   { name: "Fitness" },
   { name: "Bollywood Songs" },
+  { name:"T-Series"},
+  {name:"Cricket"},
+  {name:"Javascript"},
+  {name:"Web Developer"},
 ];
